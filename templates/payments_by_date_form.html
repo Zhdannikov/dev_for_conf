@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Оргвзносы по датам{% endblock %}
+
+{% block content %}
+    <h2>Поиск оплат в диапазоне дат</h2>
+    <form method="post">
+        <label>От: <input type="date" name="start_date" required></label><br>
+        <label>До: <input type="date" name="end_date" required></label><br>
+        <button type="submit">Поиск</button>
+    </form>
+
+    <a href="/">← На главную</a>
+{% endblock %}

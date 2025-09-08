@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Оплаты с {{ start }} по {{ end }}{% endblock %}
+
+{% block content %}
+    <h2>Оргвзносы: с {{ start }} по {{ end }}</h2>
+
+    {% if participants %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Город</th>
+                    <th>Сумма (₽)</th>
+                    <th>Дата оплаты</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for p in participants %}
+                <tr>
+                    <td>{{ p.personal.last_name }} {{ p.personal.first_name }}</td>
+                    <td>{{ p.personal.city }}</td>
+                    <td>{{ "%.2f"|format(p.conference.payment_amount) }}</td>
+                    <td>{{ p.conference.payment_date.strftime('%d.%m.%Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>В указанном периоде оплат не найдено.</p>
+    {% endif %}
+
+    <a href="/payments_by_date">← Назад</a>
+{% endblock %}

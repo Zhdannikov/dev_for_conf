@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Тезисы по городу{% endblock %}
+
+{% block content %}
+    <h2>Названия тезисов по городу</h2>
+    <form method="post">
+        <label>Город: <input type="text" name="city" required></label><br>
+        <button type="submit">Показать тезисы</button>
+    </form>
+
+    <a href="/">← На главную</a>
+{% endblock %}

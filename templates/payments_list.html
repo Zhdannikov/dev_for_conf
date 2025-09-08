@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Оплатившие оргвзнос{% endblock %}
+
+{% block content %}
+    <h2>Список уплативших организационный взнос</h2>
+
+    {% if participants %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Город</th>
+                    <th>Оргвзнос (₽)</th>
+                    <th>Дата оплаты</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for p in participants %}
+                <tr>
+                    <td>{{ p.personal.last_name }} {{ p.personal.first_name }}</td>
+                    <td>{{ p.personal.city }}</td>
+                    <td>{{ "%.2f"|format(p.conference.payment_amount) }}</td>
+                    <td>
+                        {% if p.conference.payment_date %}
+                            {{ p.conference.payment_date.strftime('%d.%m.%Y') }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Никто ещё не оплатил оргвзнос.</p>
+    {% endif %}
+
+    <a href="/">← На главную</a>
+{% endblock %}

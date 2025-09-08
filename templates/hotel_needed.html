@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Нуждаются в гостинице — {{ city }}{% endblock %}
+
+{% block content %}
+    <h2>Участники из города: {{ city }}</h2>
+    <p><strong>Нуждаются в гостинице:</strong></p>
+
+    {% if participants %}
+        <ul>
+        {% for p in participants %}
+            <li>
+                {{ p.personal.last_name }} {{ p.personal.first_name }}<br>
+                <small>{{ p.personal.workplace }}, {{ p.personal.position }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет участников из этого города, нуждающихся в гостинице.</p>
+    {% endif %}
+
+    <a href="/hotel_needed">← Назад</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Тезисы из {{ city }}{% endblock %}
+
+{% block content %}
+    <h2>Тезисы, поступившие из города: {{ city }}</h2>
+
+    {% if theses %}
+        <ol>
+        {% for t in theses %}
+            <li>
+                <strong>{{ t.personal.last_name }} {{ t.personal.first_name }}</strong><br>
+                "{{ t.conference.presentation_title }}"
+            </li>
+        {% endfor %}
+        </ol>
+    {% else %}
+        <p>Тезисы из этого города не поступали или участник не отмечен.</p>
+    {% endif %}
+
+    <a href="/thesis_by_city">← Назад</a>
+{% endblock %}

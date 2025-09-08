@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <p>Добро пожаловать в систему управления участниками конференции.</p>
+    <p><strong>Выберите действие:</strong></p>
+    <ul>
+        <li><a href="/invited_by_first_mail">1. Приглашённые по дате первого приглашения</a></li>
+        <li><a href="/add_participant">2. Добавить участника</a></li>
+        <li><a href="/payments_list">3. Список уплативших оргвзнос</a></li>
+        <li><a href="/payments_by_date">4. Оргвзносы в диапазоне дат</a></li>
+        <li><a href="/thesis_by_city">5. Тезисы по городу</a></li>
+        <li><a href="/hotel_needed">6. Нуждаются в гостинице</a></li>
+    </ul>
+{% endblock %}

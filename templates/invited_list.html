@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Приглашённые — {{ date }}{% endblock %}
+
+{% block content %}
+    <h2>Приглашённые от {{ date }}</h2>
+    <p><strong>Количество:</strong> {{ count }}</p>
+
+    {% if participants %}
+        <ul>
+        {% for p in participants %}
+            <li>
+                {{ p.personal.last_name }} {{ p.personal.first_name }} {{ p.personal.patronymic }}<br>
+                <small>{{ p.personal.workplace }}, {{ p.personal.city }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет приглашённых на указанную дату.</p>
+    {% endif %}
+
+    <a href="/invited_by_first_mail">← Назад</a>
+{% endblock %}

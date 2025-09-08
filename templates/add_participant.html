@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить участника{% endblock %}
+
+{% block content %}
+    <h2>Добавить участника конференции</h2>
+    <form method="post">
+        <fieldset>
+            <legend>Персональные данные</legend>
+            <label>Фамилия: <input type="text" name="last_name" required></label><br>
+            <label>Имя: <input type="text" name="first_name" required></label><br>
+            <label>Отчество: <input type="text" name="patronymic"></label><br>
+            <label>Учёная степень: <input type="text" name="academic_degree"></label><br>
+            <label>Учёное звание: <input type="text" name="academic_title"></label><br>
+            <label>Научное направление: <input type="text" name="scientific_field"></label><br>
+            <label>Место работы: <input type="text" name="workplace" required></label><br>
+            <label>Кафедра/отдел: <input type="text" name="department"></label><br>
+            <label>Должность: <input type="text" name="position"></label><br>
+            <label>Страна: <input type="text" name="country"></label><br>
+            <label>Город: <input type="text" name="city" required></label><br>
+            <label>Почтовый индекс: <input type="text" name="postal_code"></label><br>
+            <label>Адрес: <input type="text" name="address"></label><br>
+            <label>Раб. телефон: <input type="text" name="work_phone"></label><br>
+            <label>Дом. телефон: <input type="text" name="home_phone"></label><br>
+            <label>Email: <input type="email" name="email"></label><br>
+        </fieldset>
+
+        <fieldset style="margin-top: 20px;">
+            <legend>Участие в конференции</legend>
+            <label>Роль:
+                <select name="role">
+                    <option value="speaker">Докладчик</option>
+                    <option value="participant">Участник</option>
+                </select>
+            </label><br>
+
+            <label>Дата 1-го приглашения: <input type="date" name="first_invitation_date"></label><br>
+            <label>Дата подачи заявки: <input type="date" name="application_date"></label><br>
+            <label>Тема доклада: <input type="text" name="presentation_title"></label><br>
+            <label><input type="checkbox" name="thesis_received"> Тезисы поступили</label><br>
+            <label>Дата 2-го приглашения: <input type="date" name="second_invitation_date"></label><br>
+
+            <label>Дата уплаты оргвзноса: <input type="date" name="payment_date"></label><br>
+            <label>Размер оргвзноса: <input type="number" step="0.01" name="payment_amount" placeholder="0.00"></label><br>
+
+            <label>Дата приезда: <input type="date" name="arrival_date"></label><br>
+            <label>Дата отъезда: <input type="date" name="departure_date"></label><br>
+            <label><input type="checkbox" name="needs_hotel"> Нуждается в гостинице</label><br>
+        </fieldset>
+
+        <button type="submit">Добавить участника</button>
+    </form>
+
+    <a href="/">← На главную</a>
+{% endblock %}
