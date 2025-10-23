@@ -1,11 +1,11 @@
-name: Build and Push Docker Image
+name: Build, Push and Deploy
 
 on:
   push:
     branches: [dev, prod]
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -24,9 +24,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: |
-          a666vg/conference-app:dev
-          a666vg/conference-app:latest
+        tags: a666vg/conference-app:dev
 
     - name: Build and Push Prod
       if: github.ref == 'refs/heads/prod'
@@ -34,6 +32,31 @@ jobs:
       with:
         context: .
         push: true
-        tags: |
-          a666vg/conference-app:prod
-          a666vg/conference-app:latest
+        tags: a666vg/conference-app:prod
+
+    - name: Setup Kubernetes
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.30.2'
+
+    - name: Deploy to Kubernetes Dev
+      if: github.ref == 'refs/heads/dev'
+      run: |
+        kubectl config set-cluster k8s --server=${{ secrets.K8S_CLUSTER_URL }} --insecure-skip-tls-verify=true
+        kubectl config set-credentials github --token=${{ secrets.K8S_CLUSTER_TOKEN }}
+        kubectl config set-context k8s --cluster=k8s --user=github
+        kubectl config use-context k8s
+        
+        kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
+        kubectl rollout status deployment/conference-app -n dev
+
+    - name: Deploy to Kubernetes Prod
+      if: github.ref == 'refs/heads/prod'
+      run: |
+        kubectl config set-cluster k8s --server=${{ secrets.K8S_CLUSTER_URL }} --insecure-skip-tls-verify=true
+        kubectl config set-credentials github --token=${{ secrets.K8S_CLUSTER_TOKEN }}
+        kubectl config set-context k8s --cluster=k8s --user=github
+        kubectl config use-context k8s
+        
+        kubectl set image deployment/conference-app conference-app=a666vg/conference-app:prod -n prod
+        kubectl rollout status deployment/conference-app -n prod

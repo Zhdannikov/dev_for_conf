@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conference-app
+  namespace: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: conference-app
+  template:
+    metadata:
+      labels:
+        app: conference-app
+    spec:
+      containers:
+      - name: conference-app
+        image: a666vg/conference-app:prod
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGO_URI
+          value: "mongodb://user:user@10.0.3.5:27017/conference_db?authSource=admin"
+        - name: FLASK_DEBUG
+          value: "0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conference-app-service
+  namespace: prod
+spec:
+  selector:
+    app: conference-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
