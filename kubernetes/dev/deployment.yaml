@@ -30,11 +30,20 @@ kind: Service
 metadata:
   name: conference-app-service
   namespace: dev
+#spec:
+ # selector:
+  #  app: conference-app
+  #ports:
+   # - protocol: TCP
+    #  port: 80
+    #  targetPort: 5000
+ # type: LoadBalancer
 spec:
   selector:
     app: conference-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
+      port: 8080        
+      targetPort: 5000  
+      nodePort: 80      
+  type: NodePort  
