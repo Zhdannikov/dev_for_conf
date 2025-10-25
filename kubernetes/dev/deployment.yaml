@@ -43,7 +43,7 @@ spec:
     app: conference-app
   ports:
     - protocol: TCP
-      port: 30000        
+      port: 80        
       targetPort: 5000  
-      nodePort: 80      
+      nodePort: 30000      
   type: NodePort  
