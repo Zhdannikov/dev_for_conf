@@ -47,10 +47,12 @@ jobs:
         kubectl config set-context k8s --cluster=k8s --user=github
         kubectl config use-context k8s
         
-        kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
-        kubectl rollout restart deployment/conference-app -n dev
+        #kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
+        #kubectl rollout restart deployment/conference-app -n dev
+        POD_NAME=$(kubectl get pods -n dev -o jsonpath='{.items[0].metadata.name}')
+        kubectl exec -n dev $POD_NAME -- cat /app/kubernetes/dev/deployment.yaml | kubectl apply -f -
         kubectl rollout status deployment/conference-app -n dev
-        nohup kubectl port-forward -n dev service/conference-app-service 8080:80 --address 0.0.0.0 &
+        #nohup kubectl port-forward -n dev service/conference-app-service 8080:80 --address 0.0.0.0 &
 
 
     - name: Deploy to Kubernetes Prod
@@ -61,8 +63,7 @@ jobs:
         kubectl config set-context k8s --cluster=k8s --user=github
         kubectl config use-context k8s
         
-        kubectl set image deployment/conference-app conference-app=a666vg/conference-app:prod -n prod
-        kubectl rollout restart deployment/conference-app -n prod
+        POD_NAME=$(kubectl get pods -n prod -o jsonpath='{.items[0].metadata.name}')
+        kubectl exec -n prod $POD_NAME -- cat /app/kubernetes/prod/deployment.yaml | kubectl apply -f -
         kubectl rollout status deployment/conference-app -n prod
-        nohup kubectl port-forward -n prod service/conference-app-service 8081:80 --address 0.0.0.0 &
-
+        
