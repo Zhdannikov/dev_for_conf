@@ -50,7 +50,7 @@ jobs:
         #kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
         #kubectl rollout restart deployment/conference-app -n dev
         POD_NAME=$(kubectl get pods -n dev -o jsonpath='{.items[0].metadata.name}')
-        kubectl exec -n dev $POD_NAME -- cat /app/kubernetes/dev/deployment.yaml | kubectl apply -f --force
+        kubectl exec -n dev $POD_NAME -- cat /app/kubernetes/dev/deployment.yaml | kubectl replace --force -f -
         kubectl rollout status deployment/conference-app -n dev
         kubectl get services -n dev
         #kubectl rollout restart deployment/conference-app -n dev
