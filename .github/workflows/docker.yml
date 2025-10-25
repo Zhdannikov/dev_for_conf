@@ -50,6 +50,8 @@ jobs:
         kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
         kubectl rollout restart deployment/conference-app -n dev
         kubectl rollout status deployment/conference-app -n dev
+        nohup kubectl port-forward -n dev service/conference-app-service 8080:80 --address 0.0.0.0 &
+
 
     - name: Deploy to Kubernetes Prod
       if: github.ref == 'refs/heads/prod'
@@ -62,3 +64,5 @@ jobs:
         kubectl set image deployment/conference-app conference-app=a666vg/conference-app:prod -n prod
         kubectl rollout restart deployment/conference-app -n prod
         kubectl rollout status deployment/conference-app -n prod
+        nohup kubectl port-forward -n prod service/conference-app-service 8081:80 --address 0.0.0.0 &
+
