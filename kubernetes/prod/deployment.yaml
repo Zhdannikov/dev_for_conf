@@ -16,6 +16,7 @@ spec:
       containers:
       - name: conference-app
         image: a666vg/conference-app:prod
+        imagePullPolicy: Always 
         ports:
         - containerPort: 5000
         env:
