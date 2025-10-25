@@ -51,8 +51,9 @@ jobs:
         #kubectl rollout restart deployment/conference-app -n dev
         POD_NAME=$(kubectl get pods -n dev -o jsonpath='{.items[0].metadata.name}')
         kubectl exec -n dev $POD_NAME -- cat /app/kubernetes/dev/deployment.yaml | kubectl replace --force -f -
-        kubectl rollout status deployment/conference-app -n dev
+        
         kubectl get services -n dev
+        kubectl rollout status deployment/conference-app -n dev
         #kubectl rollout restart deployment/conference-app -n dev
         #nohup kubectl port-forward -n dev service/conference-app-service 8080:80 --address 0.0.0.0 &
 
