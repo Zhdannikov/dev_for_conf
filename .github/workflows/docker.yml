@@ -48,6 +48,7 @@ jobs:
         kubectl config use-context k8s
         
         kubectl set image deployment/conference-app conference-app=a666vg/conference-app:dev -n dev
+        kubectl rollout restart deployment/conference-app -n dev
         kubectl rollout status deployment/conference-app -n dev
 
     - name: Deploy to Kubernetes Prod
@@ -59,4 +60,5 @@ jobs:
         kubectl config use-context k8s
         
         kubectl set image deployment/conference-app conference-app=a666vg/conference-app:prod -n prod
+        kubectl rollout restart deployment/conference-app -n prod
         kubectl rollout status deployment/conference-app -n prod
