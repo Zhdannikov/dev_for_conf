@@ -1,0 +1,21 @@
+name: Security & Quality Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
+
+      - name: Scan for secrets with Trufflehog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified

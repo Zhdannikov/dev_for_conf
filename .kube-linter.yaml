@@ -1,0 +1,8 @@
+custom-checks:
+  my-custom-checks: []
+checks:
+  run-as-non-root: warning
+  no-read-only-root-fs: warning   
+  unset-cpu-requirements: warning  
+  unset-memory-requirements: warning 
+  no-anti-affinity: ignore         
