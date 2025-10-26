@@ -3,7 +3,11 @@ name: Build, Push and Deploy
 on:
   push:
     branches: [dev, prod]
-
+    paths-ignore:
+      - '**.md'                    
+      - '.github/workflows/**'     
+      - 'README.md'                
+      - 'docs/**'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
