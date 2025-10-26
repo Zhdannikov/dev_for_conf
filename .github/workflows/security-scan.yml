@@ -28,12 +28,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug - Show files
+      - name: Debug - Show problematic line
         run: |
-          echo "=== File structure ==="
-          find . -name "*.py" -type f | head -20
-          echo "=== app.py content (last lines) ==="
-          tail -10 app.py
+          echo "=== Checking debug line ==="
+          grep -n "debug=True" app.py || echo "debug=True not found"
+          echo "=== Bandit config ==="
+          cat .bandit.yml || echo "No bandit config"
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -48,12 +48,9 @@ jobs:
         run: |
           flake8 .
 
-      - name: Security scan with Bandit
+      - name: Security scan with Bandit (STRICT MODE)
         run: |
-          echo "=== Bandit version ==="
-          bandit --version
-          echo "=== Running Bandit ==="
-          bandit -r . -f json
+          bandit -r . -f txt  
 
   infrastructure-scan:
     name: Infrastructure Analysis
