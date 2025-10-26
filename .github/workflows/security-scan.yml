@@ -2,9 +2,9 @@ name: Security & Quality Scan
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ dev, prod ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev, prod ]
 
 jobs:
   secrets-scan:
