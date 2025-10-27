@@ -34,7 +34,11 @@ jobs:
           grep -n "debug=True" app.py || echo "debug=True not found"
           echo "=== Bandit config ==="
           cat .bandit.yml || echo "No bandit config"
-
+  
+  flake8_scan:
+    name: Set up Python
+    runs-on: ubuntu-latest
+    steps:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -42,14 +46,27 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install flake8 bandit
-      - name: Security scan with Bandit (STRICT MODE)
-        run: |
-          bandit -r . -f txt 
-        continue-on-error: true 
+          pip install flake8 
       - name: Lint with flake8
         run: |
           flake8 .
+
+  bandit_scan:
+    name: Set up Python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          pip install bandit 
+      - name: Security scan with Bandit (STRICT MODE)
+        run: |
+          bandit -r . -f txt 
+        
+      
 
       
 
