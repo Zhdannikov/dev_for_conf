@@ -21,24 +21,13 @@ jobs:
         with:
           extra_args: --only-verified
 
-  code-quality:
-    name: Python Code Analysis
+  flake8-scans:
+    name: Python Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug - Show problematic line
-        run: |
-          echo "=== Checking debug line ==="
-          grep -n "debug=True" app.py || echo "debug=True not found"
-          echo "=== Bandit config ==="
-          cat .bandit.yml || echo "No bandit config"
-  
-  flake8_scan:
-    name: Set up Python
-    runs-on: ubuntu-latest
-    steps:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -47,26 +36,29 @@ jobs:
       - name: Install dependencies
         run: |
           pip install flake8 
-      - name: Lint with flake8
+
+      - name: Code style with Flake8
         run: |
           flake8 .
-
-  bandit_scan:
-    name: Set up Python
+  bandit-scans:
+    name: Python Analysis
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Install dependencies
         run: |
-          pip install bandit 
-      - name: Security scan with Bandit (STRICT MODE)
+          pip install  bandit
+
+      - name: Security scan with Bandit
         run: |
-          bandit -r . -f txt 
-        
-      
+          bandit -r . -f txt
 
       
 
